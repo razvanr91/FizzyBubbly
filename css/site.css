@@ -68,11 +68,19 @@ pre[class*="language-"] {
 }
 
 .btn-outline-dark {
-    border-color: #0B0CAC !important;
+    border-color: var(--secodary-color) !important;
 }
 
 .btn-outline-dark:hover {
-    background-color: #0B0CAC !important;
+    background-color: var(--secodary-color) !important;
+}
+
+.navbar-dark {
+    background-color: #560BAD !important;
+}
+
+.footer {
+    background-color: #560BAD !important;
 }
 
 main>.container {
