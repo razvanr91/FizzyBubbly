@@ -60,17 +60,260 @@
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <!-- Prism does not stack well -->
-                    <pre ref="pre">
-<code class="language-javascript line-numbers" ref="code">//Call Hello World
- function HelloWorld() {
-    alert("Hello World");
-}
-</code></pre>
+                    <pre ref="pre"><code class="language-javascript line-numbers" ref="code">
+                        // get the values from the ui
+                        function getValues() {
+                            // take the values for fizz and buzz and parse them to int
+                            let fizzValue = document.getElementById("fizz").value;
+                            fizzValue = Number.parseInt(fizzValue);
+                        
+                            let buzzValue = document.getElementById("buzz").value;
+                            buzzValue = Number.parseInt(buzzValue);
+                        
+                            // getting the results element and saving to a variable
+                            let resultsDiv = document.getElementById("results");
+                        
+                            // create error message to present in case of wrong value entry
+                            let errorMessage = `
+                                <div class="alert alert-danger fade show" id="alert" role="alert">
+                                    You must enter valid integers in order to continue...
+                                </div>
+                            `;
+                        
+                            // making sure the results element is empty and posting results
+                            resultsDiv.innerHTML = "";
+                        
+                            // perform checks an the entered values
+                            if (Number.isInteger(fizzValue) && Number.isInteger(buzzValue)) {
+                                // call makeBubles function to reate the values
+                                let results = makeBubblesTurnary(fizzValue, buzzValue);
+                        
+                                resultsDiv.innerHTML += displayBubbles(results);
+                            } else {
+                                // display error message
+                                resultsDiv.innerHTML += errorMessage;
+                            }
+                        }
+                        
+                        // create function that handles the checking and creating the values
+                        
+                        function makeBubbles(fizzValue, buzzValue) {
+                            // create an empty array to store values
+                            let numbers = [];
+                        
+                            // checking for each condition and entering the value in to the array
+                            for (let i = 1; i <= 100; i++) {
+                                if ((i % fizzValue === 0) && (i % buzzValue === 0)) {
+                                    numbers.push('FizzBuzz');
+                                } else if (i % fizzValue === 0) {
+                                    numbers.push('Fizz');
+                                } else if (i % buzzValue === 0) {
+                                    numbers.push('Buzz');
+                                } else {
+                                    numbers.push(i);
+                                }
+                            }
+                            // return the values
+                            return numbers;
+                        }
+                        
+                        function makeBubblesSwitch(fizzValue, buzzValue) {
+                            let numbers = [];
+                        
+                            let fizz = false;
+                            let buzz = false;
+                        
+                            for (let i = 1; i <= 100; i++) {
+                                fizz = i % fizzValue === 0;
+                                buzz = i % buzzValue === 0;
+                        
+                                switch (true) {
+                                    case fizz && buzz:
+                                        numbers.push("FizzBuzz");
+                                        break;
+                                    case fizz:
+                                        numbers.push("Fizz");
+                                        break;
+                                    case buzz:
+                                        numbers.push("Buzz");
+                                        break;
+                                    default:
+                                        numbers.push(i);
+                                        break;
+                                }
+                            }
+                        
+                            return numbers;
+                        }
+                        
+                        function makeBubblesTurnary(fizzValue, buzzValue) {
+                            let numbers = [];
+                        
+                            for (let i = 1; i <= 100; i++) {
+
+                                // using a ternary operator we check for the divisibility of the two values
+                                let value = ((i % fizzValue === 0 ? 'Fizz' : '') + (i % buzzValue === 0 ? 'Buzz' : '') || i);
+                                numbers.push(value);
+                            }
+                        
+                            return numbers;
+                        }
+                        
+                        function displayBubbles(numbers) {
+                            // create an variable that helps with looping
+                            let index = 0
+                            // create a template string
+                            let template = ``;
+                            // create classes for text decoration
+                            let fizzText = "text-success";
+                            let buzzText = "text-primary";
+                            let fizzBuzzText = "fw-bold text-danger";
+                        
+                            // using two for loops in order to create 
+                            // a 5 column table. the first one loops 
+                            // 20 times, and on each loop it creates a new row
+                            // and  the second one loops 5 times, performing 
+                            // checks and creating the appropriate template each time.
+                            for (let i = 0; i < 20; i++) {
+                                template += `<tr>`;
+                                for (let j = 0; j < 5; j++) {
+                                    if (numbers[index] === "Fizz") {
+                                        template += `<td class="ms-auto ${fizzText}">${numbers[index]}</td>`;
+                                    } else if (numbers[index] === "Buzz") {
+                                        template += `<td class="ms-auto ${buzzText}">${numbers[index]}</td>`;
+                                    } else if (numbers[index] === "FizzBuzz") {
+                                        template += `<td class="ms-auto ${fizzBuzzText}">${numbers[index]}</td>`;
+                                    } else {
+                                        template += `<td class="ms-auto">${numbers[index]}</td>`;
+                                    }
+                                    index++;
+                                }
+                                template += `</tr>`;
+                            }
+                            return template;
+                        }
+                        
+                        document.getElementById('bubblyBtn').addEventListener('click', getValues);
+                    </code></pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The Code is structured in one function</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that display an alert with the "Hello World" message</p>
+                    <p>The Code is structured in three functions</p>
+                    <h5>getValues</h5>
+                    <p class="lead border-bottom border-1 pb-2">First we get the values for <span
+                            class="fw-bold">Fizz</span> and <span class="fw-bold">Buzz</span>,
+                        and <span class="fw-bold">convert </span>
+                        them
+                        to Integers using the <span class="fw-bold">.parseInt</span> method from the <span
+                            class="fw-bold">Number Class</span>.
+                        After we get the <span class="fw-bold">resultsDiv</span> so it is easier for us to insert the
+                        results later and
+                        then we create a <span class="fw-bold">errorMessage</span> variable
+                        containing instructions to insert if the values entered could not be converted
+                        to integers.
+                        Next we make sure the <span class="fw-bold">#results</span> element is empty and then we check
+                        to see if the values
+                        have been converted successfully using the <span class="fw-bold">isInteger method</span> from
+                        the <span class="fw-bold">Number Class</span>. If they were, we call the makeBubbles function
+                        where we
+                        pass the fizzValue and the buzzValue variables created earlier and store te returned values
+                        in to the <span class="fw-bold">results</span> variable. Next, we call the <span
+                            class="fw-bold">displayBubbles</span>
+                        function to wich we pass the <span class="fw-bold">results variable</span>. The returned
+                        <span class="fw-bold">template string</span> will the be pushed to the <span
+                            class="fw-bold">resultsDiv</span>
+                        using the <span class="fw-bold">.innerHtml</span> property.
+                        If the values were not converted, then we insert the error message created previosly.
+                    </p>
+                    <h5>makeBubbles</h5>
+                    <p class="lead border-bottom border-1 pb-2">
+                        The function takes the values for <span class="fw-bold">Fizz</span> and <span
+                            class="fw-bold">Buzz</span>
+                        as parameters. After, we create an empty array, and using a <span class="fw-bold">for
+                            loop</span>
+                        we count to 100 and on each iteration we perform checks for the divisibility of the values with
+                        the
+                        current number, and depending on the result, we <span class="fw-bold">push</span> the result to
+                        the array.
+                        In the end we return the array filled with the resulted values.
+                    </p>
+                    <h5>makeBubblesSwith</h5>
+                    <p class="lead border-bottom border-1 pb-2">
+                        The function takes the same two parameters as the <span class="fw-bold">makeBubbles</span>
+                        function.
+                        After, we create the same <span class="fw-bold">array</span>, but we create two more <span
+                            class="fw-bold">boolean variables</span>
+                        and we initialize them as false.
+                        Next, we create a <span class="fw-bold">for loop</span> and for each number, we check the <span
+                            class="fw-bold">divisibility</span>
+                        with the passed variables.
+                        Then, using a <span class="fw-bold">switch</span> statement that checks for <span
+                            class="fw-bold">true</span>
+                        values, and depending on the result, we <span class="fw-bold">push</span> the correct value to
+                        the array.
+                        In the end, we <span class="fw-bold">return</span> the array.
+                    </p>
+                    <h5>makeBubblesTernary</h5>
+                    <p class="lead border-bottom border-1 pb-2">
+                        This function takes the same two <span class="fw-bold">parameters</span> as the two
+                        <span class="fw-bold">functions</span> above, the only difference is that it does the
+                        <span class="fw-bold">divisibility</span> checks using a <span class="fw-bold">ternary
+                            operator</span>.
+                        The <span class="fw-bold">ternary operator (?)</span> in essence is an <span
+                            class="fw-bold">in-line if statement</span>. It uses the <span class="fw-bold">? (question
+                            mark)</span> do end the statement, and after it, we can put what we want to happen,
+                        separated by <span class="fw-bold">:(colon)</span>. To the <span class="fw-bold">left</span> of
+                        the <span class="fw-bold">:</span>
+                        we put what we want to happen if the statement is <span class="fw-bold">true</span>, and to the
+                        <span class="fw-bold">right</span> if the statement is false.
+                        So, our functions first checks if the <span class="fw-bold">i</span> value is divisible with
+                        the <span class="fw-bold">fizz value</span>. If it is, we will have the text <span
+                            class="fw-bold">Fizz</span>
+                        added to our <span class="fw-bold">value</span> variable. If not, we will have an <span
+                            class="fw-bold">empty string</span>
+                        wich in essence is a <span class="fw-bold">false value</span>. Next, we do the same thing for
+                        the
+                        <span class="fw-bold">buzz value</span>. If both the <span class="fw-bold">statements</span>
+                        return <span class="fw-bold">false</span> values, we use the <span class="fw-bold">or operator
+                            (||)</span>
+                        to add <span class="fw-bold">i</span> to the <span class="fw-bold">value variable</span>.
+                        After all the checks are done, we <span class="fw-bold">push</span> the <span
+                            class="fw-bold">value</span>
+                        variable to our <span class="fw-bold">numbers</span> variable and proceed with the the variation
+                        of the loop.
+                        In the end, we <span class="fw-bold">return the numbers</span> array to be used in the next
+                        step.
+                    </p>
+                    <h5>displayBubbles</h5>
+                    <p class="lead">
+                        First, we create a <span class="fw-bold">index</span> variable that will help us with
+                        the looping, and initialize it with 0. Afterm we create a <span class="fw-bold">template</span>
+                        variable and leave it empty. Next, we create three variables that we will help us with the
+                        stying
+                        of the results. Each is named after it's coresponding value and styling them differently.
+                        Next we create two <span class="fw-bold">for loops</span>. We are using this algorithm in order
+                        to create a <span class="fw-bold">5 column table</span>. That's why, the first one loops 20
+                        times.
+                        On each <span class="fw-bold">loop</span> we add a <span class="fw-bold">tr</span> element to
+                        the
+                        <span class="fw-bold">template</span> string. Next we start a new <span class="fw-bold">for
+                            loop</span>
+                        but this time it loops 5 times, one time per table column. On each loop, we use <span
+                            class="fw-bold">if statements</span>
+                        and the <span class="fw-bold">index</span> variable to check the value of the current <span
+                            class="fw-bold">array index</span> . Depending on the result, we add a new <span
+                            class="fw-bold">data cell</span>
+                        to the <span class="fw-bold">template string</span> and <span class="fw-bold">style</span> it
+                        using one of the <span class="fw-bold">variables</span> we created earlier. All of this is
+                        possible using <span class="fw-bold">template strings</span>.
+                        After the <span class="fw-bold">second for loop</span> ends, we add a closing <span
+                            class="fw-bold">tr</span>
+                        tag to the <span class="fw-bold">template</span>, and go on to the <span
+                            class="fw-bold">second</span>
+                        loop of <span class="fw-bold">20</span>.
+                        In the end, we <span class="fw-bold">return</span> the <span class="fw-bold">template
+                            string</span> that <span class="fw-bold">contains all the rows and columns of the
+                            table</span>.
+                    </p>
                 </div>
             </div>
         </div>
