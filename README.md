@@ -1,4 +1,5 @@
-# Fizzy Bubbly : A Coding Project
+<p align="center">
+  # Fizzy Bubbly : A Coding Project
 
 <img src="img/logo_small.png">
 
@@ -12,3 +13,6 @@ https://fizzybubbly.netlify.app
 
 All logos were created thanks to Jimdo.
 https://www.jimdo.com/
+
+  
+ </>
